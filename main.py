@@ -25,11 +25,11 @@ df_boston = pd.read_sql_query('''
 # STEP 2
 # Replace None with your code
 df_zero_emp = pd.read_sql_query('''
-                            SELECT *
-                            FROM employees
-                            RIGHT JOIN offices USING (officeCode) 
-                            GROUP BY officeCode 
-                            HAVING COUNT(employeeNumber) = 0                     
+                            SELECT o.officeCode, o.city, o.phone, o.addressLine1, o.addressLine2, o.state, o.country, o.postalCode, o.territory
+                            FROM offices o
+                            LEFT JOIN employees e USING (officeCode)
+                            GROUP BY o.officeCode
+                            HAVING COUNT(e.employeeNumber) = 0
                               
 ''', conn)
 
